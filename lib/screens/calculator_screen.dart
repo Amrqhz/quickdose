@@ -232,11 +232,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           } else {
             // Adult dosing
             dose = params['adultDose'].toDouble();
-          }
-        
-
-
-        
+          } 
           int frequency = params['frequency'];
         
           // Convert to ml similar to weightBased calculation
