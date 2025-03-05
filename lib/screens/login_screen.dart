@@ -206,7 +206,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 launchUrl(Uri.parse('https://www.linkedin.com/in/yourhandle'));
                                               },
                                             ),
-                                            
                                           ],
                                         ),
                                       ],

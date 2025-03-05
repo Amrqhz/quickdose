@@ -30,34 +30,54 @@ final List<Drug> drugs = [
     note: "در درمان OTC طول دوره درمان با استامینوفن در نوزادان 3 روز و در نوجوانان 5 روز است.",
   ),
 
-
+  Drug(
+    name: "Amoxicillin",
+    concentration: "125mg/5ml",
+    calculationType: "weightBased",
+    dosageform: "Susp",
+    parameters: {
+      "dosePerKg": 25.0, // 25mg per kg
+      "maxDose": 1000.0, // 500mg maximum
+      "frequency": 8, // every 8 hours
+    },
+    //note: "",
+  ),
   Drug(
     name: "Amoxicillin (فارنژیت، سینوزیت)",
     concentration: "250mg/5ml",
     calculationType: "weightBased",
-    dosageform: "Syr",
+    dosageform: "Susp",
     parameters: {
-      "dosePerKg": 50.0, // 25mg per kg
+      "dosePerKg": 50.0, // 50mg per kg
       "maxDose": 1000.0, // 500mg maximum
       "frequency": 24, // every 8 hours
     },
-    //forms: ["شربت", "قرص"],
     note: "به مدت 10 روز مصرف گردد. میتوان دوز را به صورت دو بار در روز هم تجویز کرد",
   ),
                                                                       
   Drug(                 
     name: "Amoxicillin (AOM)",
-    dosageform: "Syr",
+    dosageform: "Susp",
     concentration: "250mg/5ml",
     calculationType: "weightBased",
-    //dosageCalculation: "weight/4",
     parameters: {
       "dosePerKg": 80.0, // 25mg per kg
       "maxDose": 1000.0, // 500mg maximum
       "frequency": 12, // every 8 hours
     },
-    
+  ),
+  Drug(
+    name: "Co_Amoxiclav",
+    concentration: "156mg/5ml",
+    calculationType: "weightDivosion",
+    dosageform: "Syr",
+    parameters: {
+      "volume": 1.2, 
+      "maxDose": 1000.0, // 500mg maximum
+      "frequency": 24, // every 8 hours
+    },
     //forms: ["شربت", "قرص"],
+    note: "به مدت 10 روز مصرف گردد. میتوان دوز را به صورت دو بار در روز هم تجویز کرد",
   ),
 
   Drug(
@@ -66,9 +86,9 @@ final List<Drug> drugs = [
     concentration: "100mg/5ml",
     calculationType: "weightDivision",
     parameters: {
-      "divisor": 2.0, // 
-      "maxDose": 500.0, // 1000mg maximum
-      "frequency": 24, // every 6 hours
+      "volume": 0.25,
+      //"ds": 3, // 
+      "frequency": 8, // every 6 hours
     },
     note: "در روز اول دو برابر دوز مصرف گردد"
   ),
@@ -82,9 +102,7 @@ final List<Drug> drugs = [
       "frequency": 24,
       "maxDose": 500.0, //daily
     },
-    //dosageCalculation: "weight/8",
     note: "در روز اول، دو برابر دوز مصرف شود",
-    //forms: ["شربت", "قرص"],
   ),
 
     Drug(
@@ -98,7 +116,6 @@ final List<Drug> drugs = [
       //"maxDose": 500.0, // 500mg maximum
       "frequency": 24, // every 8 hours
     },
-    //forms: ["شربت", "قرص"],
   ),
     Drug(
     name: "Diphenhydramine",
@@ -119,8 +136,6 @@ final List<Drug> drugs = [
     concentration: "12.5mg/5ml",
     calculationType: "standard",
   ),
-
-
   Drug(
     name: "Ibuprofen",
     dosageform: "Syr",
@@ -134,7 +149,6 @@ final List<Drug> drugs = [
     },
     note: "همراه با غذا مصرف گردد. در موارد خونریزی گوارشی همراه با پنتاپرازول یا امپرازول تجویز گردد",
   ),
-
   Drug(
     name: "Lactolose",
     dosageform: "Syr",
@@ -144,11 +158,6 @@ final List<Drug> drugs = [
     note: "میتوان تا حجم 60 میلی لیتر در روز افزایش داد",
     //forms: ["شربت", "قرص"],
   ),
-
-
-
-
-
   Drug(
     name: "Pedilact",
     dosageform: "Syr",

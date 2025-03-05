@@ -4,7 +4,7 @@
 
 # dose_calculator
 
-A new Flutter project for myself0
+A new Flutter project for myself
 
 
 ## Getting Started

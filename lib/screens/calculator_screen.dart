@@ -170,16 +170,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         //2-WeightDivision shows how many cc in total day by division of weight to a specific divisior
         case "weightDivision":
           final params = selectedDrug!.parameters!;
-          double divisor = params["divisor"];
-          double maxDose = params ["maxDose"]; 
+          double volume = params["volume"];
+          //double ds = params ["ds"];          
           int frequency = params ["frequency"];
 
-          double dose = weight / divisor;
+          double dose = weight * volume ;
           doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
-
-          if (dose > maxDose){
-            dose = maxDose;
-          }
 
           break;
 
@@ -640,17 +636,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:[
                     IconButton(
-                      icon:  Icon(Icons.telegram, size: 15),
+                      icon:  Icon(Icons.telegram, size: 17),
                       onPressed: () => _launchURL('https://t.me/amrqhz'),
                     ),
                     SizedBox(width: 5),
                     IconButton(
-                      icon: FaIcon(FontAwesomeIcons.twitter, size: 15),
+                      icon: FaIcon(FontAwesomeIcons.twitter, size: 17),
                       onPressed: () => _launchURL("https://x.com/amrqhz"),
                     ),
                     SizedBox(width: 5),
                     IconButton(
-                      icon: Icon(Icons.share, size: 15),
+                      icon: Icon(Icons.share, size: 17),
                       onPressed: (){
                         Share.share("check out this awesome app: https://yourlink.com");
                       },
