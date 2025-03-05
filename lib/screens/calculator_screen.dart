@@ -234,6 +234,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             dose = params['adultDose'].toDouble();
           }
         
+
+
+        
           int frequency = params['frequency'];
         
           // Convert to ml similar to weightBased calculation
