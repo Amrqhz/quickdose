@@ -157,6 +157,22 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             doseResult= "هر 8 ساعت 325 میلی گرم مصرف میگردد.";
             break;
 
+            case "Ketotifen":
+            if (age<=2){
+              doseResult = "2.5cc هر 12 ساعت مصرف گردد";
+            } else if (age>2) {
+              doseResult = "5 cc هر 12 ساعت مصرف گردد";
+            }
+            break;
+            case "Pediatric Grippe":
+            if (age<=6){
+              doseResult = "4 cc هر 8 ساعت مصرف گردد";
+            } else if (age>2) {
+              doseResult = "8 cc هر 8 ساعت مصرف گردد";
+            }
+            break;
+
+
 
             default:
               throw Exception("No standard dose defined for ${selectedDrug!.name}");
@@ -168,14 +184,31 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
 
         //2-WeightDivision shows how many cc in total day by division of weight to a specific divisior
-        case "weightDivision":
+        case "volumebased":
           final params = selectedDrug!.parameters!;
           double volume = params["volume"];
-          //double ds = params ["ds"];          
+          double ds = params ["ds"];          
           int frequency = params ["frequency"];
 
-          double dose = weight * volume ;
+          double dose = weight * volume / ds;
           doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
+
+          break;
+
+        case "weightDivision":
+          final params = selectedDrug!.parameters!;
+          double divisor = params["divisor"];
+          double maxDose = params ["maxDose"]; 
+          double dss = params ["dss"];
+          int frequency = params ["frequency"];
+         
+
+          double dose = weight / divisor / dss;
+          doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
+
+          if (dose > maxDose){
+            dose = maxDose;
+          }
 
           break;
 

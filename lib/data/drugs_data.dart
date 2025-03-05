@@ -24,7 +24,8 @@ final List<Drug> drugs = [
     parameters: {
       "divisor": 0.66, // 
       "maxDose": 4000.0, // 1000mg maximum
-      "frequency": 6, // every 6 hours
+      "frequency": 6.0,
+      "dss": 4.0, // every 6 hours
     },
     
     note: "در درمان OTC طول دوره درمان با استامینوفن در نوزادان 3 روز و در نوجوانان 5 روز است.",
@@ -67,27 +68,26 @@ final List<Drug> drugs = [
     },
   ),
   Drug(
-    name: "Co_Amoxiclav",
-    concentration: "156mg/5ml",
-    calculationType: "weightDivosion",
+    name: "Co-Amoxiclav",
     dosageform: "Syr",
+    concentration: "156mg/5ml",
+    calculationType: "volumebased",
     parameters: {
-      "volume": 1.2, 
-      "maxDose": 1000.0, // 500mg maximum
-      "frequency": 24, // every 8 hours
+      "volume": 1.6,
+      "ds": 3.0, // 
+      "frequency": 8, // every 6 hours
     },
-    //forms: ["شربت", "قرص"],
-    note: "به مدت 10 روز مصرف گردد. میتوان دوز را به صورت دو بار در روز هم تجویز کرد",
+    note: "در روز اول دو برابر دوز مصرف گردد"
   ),
 
   Drug(
     name: "Azithromycin",
     dosageform: "Syr",
     concentration: "100mg/5ml",
-    calculationType: "weightDivision",
+    calculationType: "volumebased",
     parameters: {
       "volume": 0.25,
-      //"ds": 3, // 
+      "ds": 3.0, // 
       "frequency": 8, // every 6 hours
     },
     note: "در روز اول دو برابر دوز مصرف گردد"
@@ -104,8 +104,20 @@ final List<Drug> drugs = [
     },
     note: "در روز اول، دو برابر دوز مصرف شود",
   ),
+  Drug(
+    name: "Cefixime",
+    dosageform: "Susp",
+    concentration: "100mg/5ml",
+    calculationType: "volumebased",
+    parameters: {
+      "volume": 0.2,
+      "ds": 2.0, // 
+      "frequency": 12, // every 6 hours
+    },
+    note: "در روز اول دو برابر دوز مصرف گردد"
+  ),
 
-    Drug(
+  Drug(
     name: "Cephalexin",
     dosageform: "Syr",
     concentration: "250mg/5ml",
@@ -117,7 +129,7 @@ final List<Drug> drugs = [
       "frequency": 24, // every 8 hours
     },
   ),
-    Drug(
+  Drug(
     name: "Diphenhydramine",
     dosageform: "Syr",
     concentration: "12.5mg/5ml",
@@ -150,6 +162,13 @@ final List<Drug> drugs = [
     note: "همراه با غذا مصرف گردد. در موارد خونریزی گوارشی همراه با پنتاپرازول یا امپرازول تجویز گردد",
   ),
   Drug(
+    name: "Ketotifen",
+    dosageform: "Syr",
+    concentration: "1mg/5ml",
+    calculationType: "standard",
+    note: "در روز اول دو برابر دوز مصرف گردد"
+  ),
+  Drug(
     name: "Lactolose",
     dosageform: "Syr",
     concentration: "10g/15ml",
@@ -180,6 +199,13 @@ final List<Drug> drugs = [
       "minAge": 5,
     },
     //forms: ["شربت", "قرص"],
+  ),
+    Drug(
+    name: "Pediatric Grippe",
+    dosageform: "Syr",
+    concentration: "0.67mg/10ml",
+    calculationType: "standard",
+    note: "در روز اول دو برابر دوز مصرف گردد"
   ),
   // Add more drugs as needed
 ];
