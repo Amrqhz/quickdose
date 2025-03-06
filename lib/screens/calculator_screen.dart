@@ -203,7 +203,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           int frequency = params ["frequency"];
          
 
-          double dose = weight / divisor / dss;
+          double dose = weight / divisor / dss ;
           doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
 
           if (dose > maxDose){
@@ -673,7 +673,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, '/about');
                   },
-                  child: const Text('🫧 !Tell your friends about us'),
+                  child: const Text('🫧 !Tell your friends about us', style: TextStyle(fontWeight: FontWeight.w800),),
                 ),
 
                 Row(
