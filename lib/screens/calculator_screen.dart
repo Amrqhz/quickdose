@@ -499,13 +499,24 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         controller: fieldTextEditingController,
                         focusNode: fieldFocusNode,
                         textAlign: TextAlign.center,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: 'Choose a drug',
                           border: InputBorder.none,
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear, size: 20,),
+                            onPressed: () {
+                              fieldTextEditingController.clear();
+                              setState(() {
+                                selectedDrug = null;
+                                selectedForm = null;
+                              });
+                            },
+                          ),
                         ),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       );
                     },
+
                     optionsViewBuilder: (BuildContext context,
                         AutocompleteOnSelected<Drug> onSelected,
                         Iterable<Drug> options) {
