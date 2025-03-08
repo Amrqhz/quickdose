@@ -22,10 +22,10 @@ final List<Drug> drugs = [
     concentration: "100mg/1ml",
     calculationType: "weightDivision",
     parameters: {
-      "divisor": 0.66, // 
-      "maxDose": 4000.0, // 1000mg maximum
-      "frequency": 6.0,
-      "dss": 4.0, // every 6 hours
+      "divisor": 0.66,
+      "maxdose": 4000,
+      "ds": 3,
+      "frequency": 8,
     },
     
     note: "در درمان OTC طول دوره درمان با استامینوفن در نوزادان 3 روز و در نوجوانان 5 روز است.",

@@ -126,16 +126,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
         //1-standard        
         case "standard":
-          // Original calculation logic
-          //double dose;
-          //if (selectedDrug!.concentration == "100") {
-            //dose = weight / 4;
-          //} else if (selectedDrug!.concentration == "200") {
-          //  dose = weight / 8;
-          //} //else {
-            //throw Exception("Invalid concentration");
-          //}
-          //doseResult = "هر 24 ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود";
           switch (selectedDrug!.name){
             case "Lactolose":
             doseResult = "هر 24 ساعت 15سی سی مصرف گردد";
@@ -172,8 +162,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             }
             break;
 
-
-
             default:
               throw Exception("No standard dose defined for ${selectedDrug!.name}");
           }
@@ -194,16 +182,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
 
           break;
+        
 
+        //2.1
         case "weightDivision":
           final params = selectedDrug!.parameters!;
           double divisor = params["divisor"];
           double maxDose = params ["maxDose"]; 
-          double dss = params ["dss"];
+          int ds = params ["ds"];
           int frequency = params ["frequency"];
          
 
-          double dose = weight / divisor / dss ;
+          double dose = weight / divisor / ds ;
           doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
 
           if (dose > maxDose){
