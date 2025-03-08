@@ -16,20 +16,19 @@ final List<Drug> drugs = [
     //forms: ["شربت", "قرص"],
     note: "بیشتر از 4 دوز در طی 24 ساعت مصرف نگردد",
   ),
+
   Drug(
-    name: "Acetaminophen (parakid)",
-    dosageform: "Susp",
-    concentration: "100mg/1ml",
+    name: "Acetaminophen(parakid)",
+    concentration: "100mg/1ml", 
+    dosageform: "Syr", 
     calculationType: "weightDivision",
     parameters: {
-      "divisor": 0.66,
-      "maxdose": 4000,
-      "ds": 3,
-      "frequency": 8,
+      "divisor": 2.0,
+      "maxDose": 4000.0,
+      "frequency":8,
     },
-    
-    note: "در درمان OTC طول دوره درمان با استامینوفن در نوزادان 3 روز و در نوجوانان 5 روز است.",
   ),
+
 
   Drug(
     name: "Amoxicillin",

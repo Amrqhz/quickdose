@@ -7,7 +7,7 @@ import '../data/drugs_data.dart';
 import 'package:provider/provider.dart';
 import '../data/user_data.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:share_plus/share_plus.dart';
+//import 'package:share_plus/share_plus.dart';
 
 
 Future<void> _launchURL(String urlString) async {
@@ -188,12 +188,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         case "weightDivision":
           final params = selectedDrug!.parameters!;
           double divisor = params["divisor"];
-          double maxDose = params ["maxDose"]; 
-          int ds = params ["ds"];
+          double maxDose = params ["maxDose"];   
           int frequency = params ["frequency"];
          
 
-          double dose = weight / divisor / ds ;
+          double dose = weight / divisor  ;
           doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
 
           if (dose > maxDose){
@@ -492,21 +491,61 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         decoration: InputDecoration(
                           hintText: 'Choose a drug',
                           border: InputBorder.none,
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear, size: 20,),
-                            onPressed: () {
-                              fieldTextEditingController.clear();
-                              setState(() {
-                                selectedDrug = null;
-                                selectedForm = null;
-                              });
-                            },
-                          ),
+                          suffixIcon: fieldTextEditingController.text.isNotEmpty
+                              ? Container(
+                                  margin: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.shade400,
+                                        offset: const Offset(3, 3),
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                      ),
+                                      // Inner shadow (bottom-right) - darker
+                                      BoxShadow(
+                                        color: Colors.white,
+                                        offset: const Offset(-3, -3),
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                      ),
+                                    ],
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Colors.white70,
+                                        Colors.grey.shade300,
+                                      ],
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    constraints: const BoxConstraints(
+                                      minWidth: 28,
+                                      minHeight: 28,
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    icon: const Icon(Icons.clear, size: 18, color: Colors.black54),
+                                    onPressed: () {
+                                      fieldTextEditingController.clear();
+                                      setState(() {
+                                        selectedDrug = null;
+                                        selectedForm = null;
+                                      });
+                                    },
+                                  ),
+                                )
+                              : null,
                         ),
                         style: const TextStyle(fontWeight: FontWeight.bold),
+                        onChanged: (value) {
+                          // Force rebuild to show/hide the clear button
+                          setState(() {});
+                        },
                       );
                     },
-
                     optionsViewBuilder: (BuildContext context,
                         AutocompleteOnSelected<Drug> onSelected,
                         Iterable<Drug> options) {
@@ -678,13 +717,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       icon: FaIcon(FontAwesomeIcons.twitter, size: 17),
                       onPressed: () => _launchURL("https://x.com/amrqhz"),
                     ),
-                    SizedBox(width: 5),
-                    IconButton(
-                      icon: Icon(Icons.share, size: 17),
-                      onPressed: (){
-                        Share.share("check out this awesome app: https://yourlink.com");
-                      },
-                    ),
+                    //SizedBox(width: 5),
+                    //IconButton(
+                      //icon: Icon(Icons.share, size: 17),
+                      //onPressed: (){
+                        //Share.share("check out this awesome app: https://yourlink.com");
+                      //},
+                    //),
                   ],
                 )
 
