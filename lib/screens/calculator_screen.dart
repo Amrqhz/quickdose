@@ -274,7 +274,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       setState(() {
         result = doseResult;
         if (selectedDrug?.note != null) {
-          result = "$result\n${selectedDrug?.note}";
+          result = "$result\n\n${selectedDrug?.note}";
         }
       });
     
@@ -490,6 +490,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText: 'Choose a drug',
+                          hintStyle: TextStyle(color: Colors.black54),
                           border: InputBorder.none,
                           suffixIcon: fieldTextEditingController.text.isNotEmpty
                               ? Container(
@@ -690,10 +691,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     ),
                   ),
                 const Spacer(),
-                //Image.asset(
-                  //'assets/doctors.png',
-                  //height: 80,
-                //),
                 const Text(
                   'Join the community',
                   style: TextStyle(fontSize: 16),
