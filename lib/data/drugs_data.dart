@@ -42,17 +42,17 @@ final List<Drug> drugs = [
     },
     //note: "",
   ),
+
   Drug(
     name: "Amoxicillin (فارنژیت، سینوزیت)",
+    dosageform: "Syr",
     concentration: "250mg/5ml",
-    calculationType: "weightBased",
-    dosageform: "Susp",
+    calculationType: "weightDivision",
     parameters: {
-      "dosePerKg": 50.0, // 50mg per kg
-      "maxDose": 1000.0, // 500mg maximum
-      "frequency": 24, // every 8 hours
+      "divisor": 3.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 8, // every 6 hours
     },
-    note: "به مدت 10 روز مصرف گردد. میتوان دوز را به صورت دو بار در روز هم تجویز کرد",
   ),
                                                                       
   Drug(                 
@@ -64,6 +64,17 @@ final List<Drug> drugs = [
       "dosePerKg": 80.0, // 25mg per kg
       "maxDose": 1000.0, // 500mg maximum
       "frequency": 12, // every 8 hours
+    },
+  ),
+  Drug(
+    name: "Ampicillin",
+    dosageform: "Susp",
+    concentration: "125mg/5ml",
+    calculationType: "weightDivision",
+    parameters: {
+      "divisor": 2.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 6, // every 6 hours
     },
   ),
   Drug(
@@ -119,14 +130,37 @@ final List<Drug> drugs = [
   Drug(
     name: "Cephalexin",
     dosageform: "Syr",
-    concentration: "250mg/5ml",
-    calculationType: "weightBased",
-    //dosageCalculation: "weight/4",
+    concentration: "125mg/5ml",
+    calculationType: "weightDivision",
     parameters: {
-      "dosePerKg": 50.0, // 25mg per kg
-      //"maxDose": 500.0, // 500mg maximum
-      "frequency": 24, // every 8 hours
+      "divisor": 2.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 6, // every 6 hours
     },
+  ),
+  Drug(
+    name: "Cephalexin",
+    dosageform: "Syr",
+    concentration: "250mg/5ml",
+    calculationType: "weightDivision",
+    parameters: {
+      "divisor": 4.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 6, // every 6 hours
+    },
+  ),
+
+  Drug(
+    name: "Dextromethorphan",
+    dosageform: "Syr",
+    concentration: "15mg/5ml",
+    calculationType: "weightDivision",
+    parameters: {
+      "divisor": 10.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 6, // every 6 hours
+    },
+    
   ),
   Drug(
     name: "Diphenhydramine",
@@ -136,7 +170,7 @@ final List<Drug> drugs = [
     parameters: {
       "divisor": 2.0, // 
       "maxDose": 4000.0, // 1000mg maximum
-      "frequency": 8, // every 6 hours
+      "frequency": 6, // every 6 hours
     },
     
     note: "در درمان OTC طول دوره درمان با استامینوفن در نوزادان 3 روز و در نوجوانان 5 روز است.",
@@ -147,6 +181,41 @@ final List<Drug> drugs = [
     concentration: "12.5mg/5ml",
     calculationType: "standard",
   ),
+
+  Drug(
+    name: "EXPECTORANT",
+    dosageform: "Syr",
+    concentration: "100mg/2mg/30mg/5ml",
+    calculationType: "weightDivision",
+    parameters: {
+      "divisor": 6.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 8, // every 6 hours
+    },
+  ),
+  Drug(
+    name: "Hydroxizine TDS",
+    dosageform: "Syr",
+    concentration: "10mg/5ml",
+    calculationType: "weightDivision",
+    parameters: {
+      "divisor": 3.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 8, // every 6 hours
+    },
+  ),
+  Drug(
+    name: "Hydroxizine BD",
+    dosageform: "Syr",
+    concentration: "10mg/5ml",
+    calculationType: "weightDivision",
+    parameters: {
+      "divisor": 2.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 12, // every 6 hours
+    },
+  ),
+
   Drug(
     name: "Ibuprofen",
     dosageform: "Syr",
@@ -189,22 +258,23 @@ final List<Drug> drugs = [
   ),
 
   Drug(
-    name: "Acetaminophen",
-    dosageform: "Tab",
-    concentration: "325mg",
-    calculationType: "standard",
-    //dosageCalculation: "weight/4",
-    parameters: {
-      "minAge": 5,
-    },
-    //forms: ["شربت", "قرص"],
-  ),
-    Drug(
     name: "Pediatric Grippe",
     dosageform: "Syr",
     concentration: "0.67mg/10ml",
     calculationType: "standard",
     note: "در روز اول دو برابر دوز مصرف گردد"
+  ),
+
+  Drug(
+    name: "Promethzine",
+    dosageform: "Syr",
+    concentration: "5mg/5ml",
+    calculationType: "weightDivision",
+    parameters: {
+      "divisor": 10.0, // 
+      "maxDose": 4000.0, // 1000mg maximum
+      "frequency": 6, // every 6 hours
+    },
   ),
   // Add more drugs as needed
 ];
