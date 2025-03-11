@@ -2,8 +2,8 @@
 ![QUICK DOSE](./assets/app.jpg)
 
 
-# dose calculator for pharmacist 
-(https://raw.githubusercontent.com/jmhobbs/cultofthepartyparrot.com/master/parrots/parrot.gif)
+# dose calculator for pharmacist.
+
 
 A new Flutter project for myself
 
@@ -23,4 +23,4 @@ samples, guidance on mobile development, and a full API reference.
 hope you enjoy!
 
 
-find me on social media: @amrqhz.
+find me on social media: @amrqhz.![Alt Text](https://raw.githubusercontent.com/jmhobbs/cultofthepartyparrot.com/master/parrots/parrot.gif)
