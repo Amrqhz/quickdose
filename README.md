@@ -2,7 +2,8 @@
 ![QUICK DOSE](./assets/app.jpg)
 
 
-# dose calculator for pharmacist [https://raw.githubusercontent.com/jmhobbs/cultofthepartyparrot.com/master/parrots/parrot.gif]
+# dose calculator for pharmacist 
+(https://raw.githubusercontent.com/jmhobbs/cultofthepartyparrot.com/master/parrots/parrot.gif)
 
 A new Flutter project for myself
 
