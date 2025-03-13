@@ -112,8 +112,9 @@ class _ShopingScreenState extends State<ShopingScreen> {
         child: Text(
           title,
           style: TextStyle(
-            color: isSelected ? Colors.black : const Color(0xFF000000),
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            //color: isSelected ? Colors.black : const Color(0xFF000000),
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal
+            ,fontSize: 15,
           ),
         ),
       ),
@@ -140,8 +141,8 @@ class _ShopingScreenState extends State<ShopingScreen> {
         break;
       case 1:
         title = "Upgrade to Pro";
-        price = "800/month";
-        time = "Depends on your referal code";
+        price = "300/month";
+        time = "3 month";
         features = ["More than 20 drugs ", "Not only for Pediatrics"];
         startColor = const Color.fromARGB(255, 28, 76, 116);
         endColor = const Color.fromARGB(255, 204, 163, 211);
@@ -149,10 +150,10 @@ class _ShopingScreenState extends State<ShopingScreen> {
       case 2:
         title = "Enterprise Plan";
         price = "500/month";
-        time = "Depends on your referal code";
+        time = "6 month";
         features = ["Custom Drug selection"];
-        startColor = Colors.indigo.shade300;
-        endColor = Colors.indigo.shade500;
+        startColor = const Color.fromARGB(255, 89, 216, 64);
+        endColor = const Color.fromARGB(255, 161, 203, 121);
         break;
     }
 
@@ -192,7 +193,7 @@ class _ShopingScreenState extends State<ShopingScreen> {
               Text(
                 time,
                 style: const TextStyle(
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -243,30 +244,30 @@ class _ShopingScreenState extends State<ShopingScreen> {
     );
   }
 
-  Widget _buildFeatureCard(String title, Color startColor, Color endColor) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        gradient: LinearGradient(
-          colors: [startColor, endColor],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black45,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _buildFeatureCard(String title, Color startColor, Color endColor) {
+  //   return Container(
+  //     padding: const EdgeInsets.all(16),
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(12),
+  //       gradient: LinearGradient(
+  //         colors: [startColor, endColor],
+  //         begin: Alignment.topLeft,
+  //         end: Alignment.bottomRight,
+  //       ),
+  //     ),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.end,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           title,
+  //           style: const TextStyle(
+  //             color: Colors.black45,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
