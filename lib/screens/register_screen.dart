@@ -90,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Icons.app_registration,
                   size: 48,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Text(
                   'Register',
                   style: GoogleFonts.roboto(
@@ -153,13 +153,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('I am a member !', style: TextStyle(fontWeight: FontWeight.bold),
+                    Text('I am a member !', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                     ),
                     TextButton(
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, '/login');
                       },
-                      child: const Text('Go to login page ', style: TextStyle(fontWeight: FontWeight.bold),
+                      child: const Text('Go to login page', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                     ),
                   ],

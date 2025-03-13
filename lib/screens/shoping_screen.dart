@@ -9,7 +9,12 @@ class ShopingScreen extends StatefulWidget {
 }
 
 class _ShopingScreenState extends State<ShopingScreen> {
-  int selectedPlanIndex = 0; // Default to Pro Plan
+  int selectedPlanIndex = 0; // Default to free Plan
+  int selectedDurationIndex = 0; // Default to first duration option
+  
+  // Duration options
+  final List<String> durationOptions = ["1 month","3 months", "6 months", "12 months"];
+  final List<int> durationValues = [1, 3, 6, 12];
 
   @override
   Widget build(BuildContext context) {
@@ -51,39 +56,6 @@ class _ShopingScreenState extends State<ShopingScreen> {
               
               // Selected plan details
               _buildSelectedPlanDetails(),
-              
-              //const SizedBox(height: 20),
-              
-              // Feature cards grid
-              // Expanded(
-              //   child: GridView.count(
-              //     crossAxisCount: 2,
-              //     mainAxisSpacing: 15,
-              //     crossAxisSpacing: 15,
-              //     children: [
-              //       _buildFeatureCard(
-              //         "Unlimited Data, Calls, and Voice notes",
-              //         Colors.pink.shade100,
-              //         Colors.pink.shade200,
-              //       ),
-              //       _buildFeatureCard(
-              //         "Fast international data roaming",
-              //         Colors.blue.shade100,
-              //         Colors.blue.shade200,
-              //       ),
-              //       _buildFeatureCard(
-              //         "Full access additional",
-              //         Colors.green.shade100,
-              //         Colors.lime.shade300,
-              //       ),
-              //       _buildFeatureCard(
-              //         "eSim protection and",
-              //         Colors.blue.shade100,
-              //         Colors.blue.shade200,
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -97,6 +69,8 @@ class _ShopingScreenState extends State<ShopingScreen> {
       onTap: () {
         setState(() {
           selectedPlanIndex = index;
+          // Reset duration selection when changing plans
+          selectedDurationIndex = 0;
         });
       },
       child: Container(
@@ -112,9 +86,8 @@ class _ShopingScreenState extends State<ShopingScreen> {
         child: Text(
           title,
           style: TextStyle(
-            //color: isSelected ? Colors.black : const Color(0xFF000000),
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal
-            ,fontSize: 15,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            fontSize: 15,
           ),
         ),
       ),
@@ -141,19 +114,49 @@ class _ShopingScreenState extends State<ShopingScreen> {
         break;
       case 1:
         title = "Upgrade to Pro";
-        price = "300/month";
-        time = "3 month";
-        features = ["More than 20 drugs ", "Not only for Pediatrics"];
+        
+        // Calculate price based on duration with discounts
+        int months = durationValues[selectedDurationIndex];
+        double monthlyPrice = 100.0;
+        double discount = 0;
+        
+        if (months == 6) discount = 0.05;
+        if (months == 12) discount = 0.15;
+        
+        double totalPrice = monthlyPrice * months * (1 - discount);
+        
+        price = totalPrice.toStringAsFixed(0);
+        time = durationOptions[selectedDurationIndex];
+        if (discount > 0) {
+          time += " (${(discount * 100).toInt()}% off)";
+        }
+        
+        features = ["More than 50 drugs ", "Pediatrics and Adults", "Any types of dosageform", "Based on IRC-FDA drug list"];
         startColor = const Color.fromARGB(255, 28, 76, 116);
         endColor = const Color.fromARGB(255, 204, 163, 211);
         break;
       case 2:
         title = "Enterprise Plan";
-        price = "500/month";
-        time = "6 month";
-        features = ["Custom Drug selection"];
-        startColor = const Color.fromARGB(255, 89, 216, 64);
-        endColor = const Color.fromARGB(255, 161, 203, 121);
+        
+        // Calculate price based on duration with discounts
+        int months = durationValues[selectedDurationIndex];
+        double monthlyPrice = 200.0;
+        double discount = 0;
+        
+        if (months == 6) discount = 0.05;
+        if (months == 12) discount = 0.15;
+        
+        double totalPrice = monthlyPrice * months * (1 - discount);
+        
+        price = "\$${totalPrice.toStringAsFixed(0)}";
+        time = durationOptions[selectedDurationIndex];
+        if (discount > 0) {
+          time += " (${(discount * 100).toInt()}% off)";
+        }
+        
+        features = ["Custom Drug selection", "More than 50 drugs ", "Pediatrics and Adults", "Any types of dosageform", "Based on IRC-FDA drug list"];
+        startColor = const Color.fromARGB(255, 216, 64, 84);
+        endColor = const Color.fromARGB(255, 203, 121, 155);
         break;
     }
 
@@ -199,8 +202,35 @@ class _ShopingScreenState extends State<ShopingScreen> {
                 ),
               ),
             ],
-
           ),
+          
+          // Only show duration selection for paid plans (inside the card)
+          if (selectedPlanIndex > 0) 
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Select subscription period:",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                      durationOptions.length,
+                      (index) => _buildDurationChip(index),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          
           const SizedBox(height: 12),
           ...features.map((feature) => Padding(
             padding: const EdgeInsets.only(bottom: 8),
@@ -218,7 +248,7 @@ class _ShopingScreenState extends State<ShopingScreen> {
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: () async {
-              final url = "https://x.com/amrqhz";
+              final url = "https://t.me/amrqhz";
               if (await canLaunchUrl(Uri.parse(url))) {
                 await launchUrl(Uri.parse(url));
               } else {
@@ -237,37 +267,49 @@ class _ShopingScreenState extends State<ShopingScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Center(child: Text("Buy Now")),
+            child: const Center(child: Text("Buy Now", style: TextStyle(fontWeight: FontWeight.w600))),
           ),
         ],
       ),
     );
   }
-
-  // Widget _buildFeatureCard(String title, Color startColor, Color endColor) {
-  //   return Container(
-  //     padding: const EdgeInsets.all(16),
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(12),
-  //       gradient: LinearGradient(
-  //         colors: [startColor, endColor],
-  //         begin: Alignment.topLeft,
-  //         end: Alignment.bottomRight,
-  //       ),
-  //     ),
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.end,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           title,
-  //           style: const TextStyle(
-  //             color: Colors.black45,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  
+  Widget _buildDurationChip(int index) {
+    bool isSelected = selectedDurationIndex == index;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedDurationIndex = index;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.white : Colors.white.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          durationOptions[index],
+          style: TextStyle(
+            color: isSelected ? startColorForPlan(selectedPlanIndex) : Colors.white,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    );
+  }
+  
+  // Helper method to get start color for the selected plan
+  Color startColorForPlan(int planIndex) {
+    switch (planIndex) {
+      case 1:
+        return const Color.fromARGB(255, 28, 76, 116);
+      case 2:
+        return const Color.fromARGB(255, 89, 216, 64);
+      default:
+        return const Color.fromARGB(255, 65, 63, 63);
+    }
+  }
 }

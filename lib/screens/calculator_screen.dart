@@ -274,7 +274,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       setState(() {
         result = doseResult;
         if (selectedDrug?.note != null) {
-          result = "$result\n\n${selectedDrug?.note}";
+          result = "$result\n${selectedDrug?.note}";
         }
       });
     
@@ -431,32 +431,33 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         textDirection: TextDirection.rtl,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            //padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.shopping_basket_outlined),
+                      icon: const Icon(Icons.shopping_cart),
                       onPressed: (){
                         Navigator.pushNamed(context, "/shoping");
                       },
                     ),
-
+                    
                     IconButton(
                       icon: const Icon(Icons.person_outline),
                       onPressed: () {
                         _scaffoldKey.currentState?.openDrawer();
                       },
                     ),
-                    
                   ],
                 ),
                 const SizedBox(height: 30),
 
                 //make change to show a searchable dropdown 
                 Container(
+                  width: 340,
                   padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -557,7 +558,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.white,
                           child: Container(
-                            width: 300,
+                            width: 230,
                              // Set the width as needed
                             constraints: BoxConstraints(
                               maxHeight: 300,
@@ -622,6 +623,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 ),
                 const SizedBox(height: 20),
                 Container(
+                  width: 340,
                   padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -642,6 +644,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 ),
                 const SizedBox(height: 20),
                 Container(
+                  width: 340,
                   padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -660,7 +663,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: calculateDose,
                   style: ElevatedButton.styleFrom(
@@ -678,6 +681,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w900),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0, left: 70, right: 70),
+                  child: Divider(
+                    //color: Color.fromARGB(255, 49, 101, 129),
+                  ),
+                ),
                 if (result != null)
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -690,6 +699,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                Padding(
+                  padding: const EdgeInsets.only( left: 70, right: 70),
+                  child: Divider(
+                    //color: Color.fromARGB(255, 49, 101, 129),
+                  ),
+                ),
                 const Spacer(),
                 const Text(
                   'Join the community',
