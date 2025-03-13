@@ -110,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         : null;
         
                   },
-                  
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(

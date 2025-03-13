@@ -9,7 +9,7 @@ class ShopingScreen extends StatefulWidget {
 }
 
 class _ShopingScreenState extends State<ShopingScreen> {
-  int selectedPlanIndex = 1; // Default to Pro Plan
+  int selectedPlanIndex = 0; // Default to Pro Plan
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _ShopingScreenState extends State<ShopingScreen> {
                   child: const Text("Back", style: TextStyle(fontSize: 16, color: Colors.black)),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
               const Text(
                 "Pick your Plan",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -52,38 +52,38 @@ class _ShopingScreenState extends State<ShopingScreen> {
               // Selected plan details
               _buildSelectedPlanDetails(),
               
-              const SizedBox(height: 20),
+              //const SizedBox(height: 20),
               
               // Feature cards grid
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: ,
-                  crossAxisSpacing: 15,
-                  children: [
-                    _buildFeatureCard(
-                      "Unlimited Data, Calls, and Voice notes",
-                      Colors.pink.shade100,
-                      Colors.pink.shade200,
-                    ),
-                    _buildFeatureCard(
-                      "Fast international data roaming",
-                      Colors.blue.shade100,
-                      Colors.blue.shade200,
-                    ),
-                    _buildFeatureCard(
-                      "Full access additional",
-                      Colors.green.shade100,
-                      Colors.lime.shade300,
-                    ),
-                    _buildFeatureCard(
-                      "eSim protection and",
-                      Colors.blue.shade100,
-                      Colors.blue.shade200,
-                    ),
-                  ],
-                ),
-              ),
+              // Expanded(
+              //   child: GridView.count(
+              //     crossAxisCount: 2,
+              //     mainAxisSpacing: 15,
+              //     crossAxisSpacing: 15,
+              //     children: [
+              //       _buildFeatureCard(
+              //         "Unlimited Data, Calls, and Voice notes",
+              //         Colors.pink.shade100,
+              //         Colors.pink.shade200,
+              //       ),
+              //       _buildFeatureCard(
+              //         "Fast international data roaming",
+              //         Colors.blue.shade100,
+              //         Colors.blue.shade200,
+              //       ),
+              //       _buildFeatureCard(
+              //         "Full access additional",
+              //         Colors.green.shade100,
+              //         Colors.lime.shade300,
+              //       ),
+              //       _buildFeatureCard(
+              //         "eSim protection and",
+              //         Colors.blue.shade100,
+              //         Colors.blue.shade200,
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

@@ -85,7 +85,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                
+                const Icon(
+                  Icons.app_registration,
+                  size: 48,
+                ),
+                const SizedBox(height: 20),
                 Text(
                   'Register',
                   style: GoogleFonts.roboto(
@@ -144,7 +149,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Text(_idImage == null ? 'Upload your ID image' : 'Image Selected'),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('I am a member !', style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      child: const Text('Go to login page ', style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),                
                 ElevatedButton(
                   onPressed: _isLoading ? null : _register,
                   style: ElevatedButton.styleFrom(
@@ -162,20 +182,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                ),
-                const Spacer(),
-                Text(
-                  'i am a member!', style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  child: const Text('Go to login page ', style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  ),),
                 ),
               ],
             ),
