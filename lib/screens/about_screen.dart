@@ -65,7 +65,7 @@ Widget build(BuildContext context){
                         children:[
                           IconButton(
                             icon:  Icon(Icons.telegram, size: 20),
-                            onPressed: () => _launchURL('https://t.me/amrqhz'),
+                            onPressed: () => _launchURL('https://t.me/TA_pharmacy'),
                           ),
                           SizedBox(width: 10),
                           IconButton(

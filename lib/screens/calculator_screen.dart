@@ -722,7 +722,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   children:[
                     IconButton(
                       icon:  Icon(Icons.telegram, size: 17),
-                      onPressed: () => _launchURL('https://t.me/amrqhz'),
+                      onPressed: () => _launchURL('https://t.me/TA_pharmacy'),
                     ),
                     SizedBox(width: 5),
                     IconButton(

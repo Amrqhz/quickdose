@@ -195,16 +195,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                               icon: const Icon(Icons.telegram),
                                               onPressed: () {
                                                 // Open Telegram link
-                                                launchUrl(Uri.parse('https://t.me/Amrqhz'));
+                                                launchUrl(Uri.parse('https://t.me/amrqhz'));
                                               },
                                             ),
-                                            IconButton(
-                                              icon: const FaIcon(FontAwesomeIcons.linkedinIn),
-                                              onPressed: () {
-                                                // Open LinkedIn link
-                                                launchUrl(Uri.parse('https://www.linkedin.com/in/yourhandle'));
-                                              },
-                                            ),
+                                            // IconButton(
+                                            //   icon: const FaIcon(FontAwesomeIcons.linkedinIn),
+                                            //   onPressed: () {
+                                            //     // Open LinkedIn link
+                                            //     launchUrl(Uri.parse('https://www.linkedin.com/in/yourhandle'));
+                                            //   },
+                                            // ),
                                           ],
                                         ),
                                       ],
