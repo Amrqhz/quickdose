@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -69,7 +70,7 @@ Widget build(BuildContext context){
                           ),
                           SizedBox(width: 10),
                           IconButton(
-                            icon: Icon(Icons.email, size: 20),
+                            icon: FaIcon(FontAwesomeIcons.twitter, size: 20),
                             onPressed: () => _launchURL("https://x.com/amrqhz"),
                           ),
                           SizedBox(width: 10),
