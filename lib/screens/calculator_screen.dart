@@ -693,8 +693,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     child: Text(
                       result!,
                       style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.center,
                     ),
