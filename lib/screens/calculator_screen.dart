@@ -72,6 +72,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     switch (dosageform) {
       case 'Syr':
         return Color(0xFF67B639); // Green
+      case 'Elixir':
+        return Color.fromARGB(255, 182, 57, 130); // Green
       case 'Tab':
         return Color(0xFFE74C3C); // Red
       case 'Inj':
@@ -268,7 +270,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           break;
 
         default:
-          throw Exception("! لطفا دوباره سعی کنید");
+          throw ("برای داروی فوق محاسبه ای صورت نمیگیرد");
       }
 
       setState(() {
