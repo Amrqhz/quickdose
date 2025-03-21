@@ -51,15 +51,15 @@ Future<void> _login() async {
           _passwordController.text,
         );
         
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(_).showSnackBar(
           SnackBar(
             content: Text('Login successful!'),
             backgroundColor: Colors.green,
           ),
         );
-        print('Attempting navigation to calculator');
+        ('Attempting navigation to calculator');
         Navigator.pushReplacementNamed(context, '/calculator').then((_){
-          print('Navigation completed');
+          ('Navigation completed');
         });
         
       } catch (e) {
