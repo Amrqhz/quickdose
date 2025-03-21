@@ -38,22 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // Future<void> _login() async{
-  //   if (_formKey.currentState!.validate()) {
-  //     // Here you would typically verify the credentials with your backend
-  //     // For this example, we'll just set the UserData and navigate
-      
-  //     final UserData = Provider.of<UserDataProvider>(context, listen: false);
-  //     UserData.setUserData(_emailController.text, _passwordController.text);
-      
-
-
-
-  //     Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (Route<dynamic> route) => false);
-  //   } else {
-  //     ('Please provide valid input');
-  //   }
-  // }
 Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -61,12 +45,6 @@ Future<void> _login() async {
       });
 
       try {
-        // If using Provider:
-        // await Provider.of<AuthProvider>(context, listen: false).login(
-        //   _emailController.text,
-        //   _passwordController.text,
-        // );
-        
         // If not using Provider:
         await _apiService.login(
           _emailController.text,

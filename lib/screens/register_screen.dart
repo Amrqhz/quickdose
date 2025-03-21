@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:typed_data';
-import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/custom_text_field.dart';
 import '../services/api_service.dart';
@@ -17,8 +15,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
-  Uint8List? _idImage;
-  final ImagePicker _picker = ImagePicker();
   bool _isLoading = false;
 
   final ApiService _apiService = ApiService();
@@ -31,15 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  Future<void> _pickImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null){
-      final bytes = await image.readAsBytes();
-      setState(() {
-        _idImage = bytes;
-      });
-    }
-  }
 
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
@@ -150,18 +137,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     return null;
                   },
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: _pickImage,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD8E2DC),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Text(_idImage == null ? 'Upload your ID image' : 'Image Selected'),
-                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(
