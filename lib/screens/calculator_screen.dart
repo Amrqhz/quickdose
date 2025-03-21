@@ -750,10 +750,8 @@ double get subscriptionPercentage {
                     textAlign: TextAlign.center,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      labelText: 'weight(Kg)',
-                      labelStyle: TextStyle(color: Colors.black54),
-                      alignLabelWithHint: false,
-                      floatingLabelAlignment: FloatingLabelAlignment.center,
+                      hintText: 'weight(Kg)',
+                      hintStyle: TextStyle(color: Colors.black54),
                     ),
                   ),
                 ),
@@ -771,10 +769,8 @@ double get subscriptionPercentage {
                     textAlign: TextAlign.center,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      labelText: 'Age(years old)',
-                      labelStyle: TextStyle(color: Colors.black54),
-                      alignLabelWithHint: false,
-                      floatingLabelAlignment: FloatingLabelAlignment.center
+                      hintText: 'Age(years old)',
+                      hintStyle: TextStyle(color: Colors.black54),
                     ),
                   ),
                 ),
