@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/custom_text_field.dart';
-import 'package:provider/provider.dart';
-import '../data/user_data.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../services/api_service.dart';
 //class UserData {
   //static String id = '';
   //static String password = '';
@@ -27,7 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final ApiService _apiService = ApiService();
+  
+  bool _isLoading = false;
 
 
 
@@ -38,24 +38,66 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      // Here you would typically verify the credentials with your backend
-      // For this example, we'll just set the UserData and navigate
+  // Future<void> _login() async{
+  //   if (_formKey.currentState!.validate()) {
+  //     // Here you would typically verify the credentials with your backend
+  //     // For this example, we'll just set the UserData and navigate
       
-      final UserData = Provider.of<UserDataProvider>(context, listen: false);
-      UserData.setUserData(_emailController.text, _passwordController.text);
+  //     final UserData = Provider.of<UserDataProvider>(context, listen: false);
+  //     UserData.setUserData(_emailController.text, _passwordController.text);
+      
 
 
-      // In a real app, you would typically not print the password
-      // print("Login: Password set to ${UserData.password}");
 
-      Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (Route<dynamic> route) => false);
-    } else {
-      ('Please provide valid input');
+  //     Navigator.of(context).pushNamedAndRemoveUntil('/calculator', (Route<dynamic> route) => false);
+  //   } else {
+  //     ('Please provide valid input');
+  //   }
+  // }
+Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        // If using Provider:
+        // await Provider.of<AuthProvider>(context, listen: false).login(
+        //   _emailController.text,
+        //   _passwordController.text,
+        // );
+        
+        // If not using Provider:
+        await _apiService.login(
+          _emailController.text,
+          _passwordController.text,
+        );
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login successful!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        print('Attempting navigation to calculator');
+        Navigator.pushReplacementNamed(context, '/calculator').then((_){
+          print('Navigation completed');
+        });
+        
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login failed: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -227,11 +269,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const Spacer(),
-                TextButton(
-                    onPressed: _login, 
-                    child: const Text('Welcome 🫧', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),),
-                  ),
-                const Spacer(),
+                _isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : TextButton(
+                      onPressed: _login, 
+                      child: const Text('Welcome 🫧', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),)
+                    ,),
+                Spacer()
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:quickdose/screens/about_screen.dart';
+import 'package:quickdose/screens/home_screen.dart';
 
 import 'package:quickdose/screens/shoping_screen.dart';
 import 'package:quickdose/screens/splash_screen.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         '/shoping': (context) => ShopingScreen(),
         "/splash": (context) => SplashScreen(),
         "/splash2" : (context) => SplashScreen2(),
+        "/home": (context) => HomeScreen(),
         
       },
     );

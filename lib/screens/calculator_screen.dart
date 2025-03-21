@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/drug.dart';
 import '../data/drugs_data.dart';
+// Removed Provider import
 import 'package:provider/provider.dart';
 import '../data/user_data.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import 'package:share_plus/share_plus.dart';
-
+import '../services/api_service.dart';
+import '../models/user.dart';
 
 Future<void> _launchURL(String urlString) async {
   final Uri url = Uri.parse(urlString);
@@ -17,23 +17,22 @@ Future<void> _launchURL(String urlString) async {
   }
 }
 
-
-
-class UserData {
-  static String email = '';
-  static String password = '';
-}
-
-
-
 class CalculatorScreen extends StatefulWidget{
   const CalculatorScreen({super.key});
+  
 
   @override
   State<CalculatorScreen> createState() => _CalculatorScreenState();
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
+  final ApiService _apiService = ApiService();
+  User? _user;
+  Subscription? _subscription;
+  bool _isLoading = true;
+  bool _isSubscriptionExpanded = false;
+ // Simple state for theme without provider
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Drug? selectedDrug;
   String? selectedForm;
@@ -43,19 +42,90 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   final TextEditingController searchController = TextEditingController();
   List<Drug> filteredDrugs = [];
 
-   @override
+  @override
   void initState() {
     super.initState();
+    
     filteredDrugs = List.from(drugs); // Initialize with all drugs
     searchController.addListener(_filterDrugs);
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      
+      final userData = await _apiService.getUserInfo();
+      ('User info received: $userData');
+      
+      // Check if the widget is still mounted before setting state
+      if (!mounted) return;
+      
+      setState(() {
+        _user = User.fromJson(userData);
+      });
+
+      try {
+
+        final subData = await _apiService.getActiveSubscription();
+        // Check if the widget is still mounted before setting state
+        if (!mounted) return;
+        
+        setState(() {
+          _subscription = Subscription.fromJson(subData);
+        });
+      } catch (e) {
+        ('No active subscription found: $e');
+      }
+    } catch (e) {
+      // Check if the widget is still mounted before showing SnackBar
+      if (!mounted) return;
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to load user data: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      Navigator.pushReplacementNamed(context, '/login');
+    } finally {
+      ('Loading data completed');
+      
+      // Check if the widget is still mounted before setting state
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _logout() async {
+    try {
+      await _apiService.logout();
+      Navigator.pushReplacementNamed(context, '/login');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to logout: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
   void dispose() {
     searchController.removeListener(_filterDrugs);
     searchController.dispose();
+    weightController.dispose();
+    ageController.dispose();
     super.dispose();
   }
+  
   void _filterDrugs() {
     String query = searchController.text.toLowerCase();
     setState(() {
@@ -64,8 +134,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           .toList();
     });
   }
-
-
 
   // Dosage form tag
   Color getDosageFormColor(String dosageform) {
@@ -90,15 +158,27 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     }
   }
 
+// Add these methods instead:
+int get totalDays {
+  if (_subscription == null) return 1; // Avoid division by zero
+  final start = DateTime.parse(_subscription!.startDate);
+  final end = DateTime.parse(_subscription!.endDate);
+  return end.difference(start).inDays;
+}
 
+int get remainingDays {
+  if (_subscription == null) return 0;
+  final end = DateTime.parse(_subscription!.endDate);
+  final now = DateTime.now();
+  return end.difference(now).inDays;
+}
 
-  //  subscription tracking
-  final int totalDays = 30; // Total subscription days
-  final int remainingDays = 12; // Days remaining (you should get this from your backend)
-
-  double get subscriptionPercentage => remainingDays / totalDays;
-
-
+double get subscriptionPercentage {
+  if (totalDays <= 0) return 0.0; // Avoid division by zero
+  double percentage = remainingDays / totalDays;
+  // Ensure the percentage is between 0 and 1
+  return percentage.clamp(0.0, 1.0);
+}
 
   // drug dose calculation
   void calculateDose() {
@@ -123,57 +203,48 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       String doseResult = "";
       // Dose Calculation Logic
       switch (selectedDrug!.calculationType) {
-        
-
-
         //1-standard        
         case "standard":
           switch (selectedDrug!.name){
             case "Lactolose":
-            doseResult = "هر 24 ساعت 15سی سی مصرف گردد";
-            break;
+              doseResult = "هر 24 ساعت 15سی سی مصرف گردد";
+              break;
             case "2":
-            doseResult = "8mg TDS";
-            break;
+              doseResult = "8mg TDS";
+              break;
             case "Diphenhydramine Compound":
-            if (age <= 5){
-              doseResult = " 2.5 سی سی هر 4 ساعت";
-            } else if (age >=6 && age <= 12){
-              doseResult = "5 سی سی هر 4 ساعت";
-            }
-            break;
+              if (age <= 5){
+                doseResult = " 2.5 سی سی هر 4 ساعت";
+              } else if (age >=6 && age <= 12){
+                doseResult = "5 سی سی هر 4 ساعت";
+              }
+              break;
             case "Pedilact":
-            doseResult = "روزانه 5 قطره ";
-            break;
+              doseResult = "روزانه 5 قطره ";
+              break;
             case "Acetaminophen":
-            doseResult= "هر 8 ساعت 325 میلی گرم مصرف میگردد.";
-            break;
-
+              doseResult= "هر 8 ساعت 325 میلی گرم مصرف میگردد.";
+              break;
             case "Ketotifen":
-            if (age<=2){
-              doseResult = "2.5cc هر 12 ساعت مصرف گردد";
-            } else if (age>2) {
-              doseResult = "5 cc هر 12 ساعت مصرف گردد";
-            }
-            break;
+              if (age<=2){
+                doseResult = "2.5cc هر 12 ساعت مصرف گردد";
+              } else if (age>2) {
+                doseResult = "5 cc هر 12 ساعت مصرف گردد";
+              }
+              break;
             case "Pediatric Grippe":
-            if (age<=6){
-              doseResult = "4 cc هر 8 ساعت مصرف گردد";
-            } else if (age>2) {
-              doseResult = "8 cc هر 8 ساعت مصرف گردد";
-            }
-            break;
-
+              if (age<=6){
+                doseResult = "4 cc هر 8 ساعت مصرف گردد";
+              } else if (age>2) {
+                doseResult = "8 cc هر 8 ساعت مصرف گردد";
+              }
+              break;
             default:
               throw Exception("No standard dose defined for ${selectedDrug!.name}");
           }
           break;
 
-
-
-
-
-        //2-WeightDivision shows how many cc in total day by division of weight to a specific divisior
+        //2-volumebased
         case "volumebased":
           final params = selectedDrug!.parameters!;
           double volume = params["volume"];
@@ -182,32 +253,23 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
           double dose = weight * volume / ds;
           doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
-
           break;
         
-
-        //2.1
+        //2.1-weightDivision
         case "weightDivision":
           final params = selectedDrug!.parameters!;
           double divisor = params["divisor"];
           double maxDose = params ["maxDose"];   
           int frequency = params ["frequency"];
          
-
-          double dose = weight / divisor  ;
-          doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
-
+          double dose = weight / divisor;
           if (dose > maxDose){
             dose = maxDose;
           }
-
+          doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
           break;
 
-
-
-
-
-        //3-weightBased, it's just multiplie weight with dose per kilograms
+        //3-weightBased
         case "weightBased":
           final params = selectedDrug!.parameters!;
           double dosePerKg = params['dosePerKg'];
@@ -219,9 +281,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             calculatedDose = maxDose;
           }
         
-        // Convert to ml based on concentration
+          // Convert to ml based on concentration
           String concentration = selectedDrug!.concentration;
-        // Extract numbers from concentration string (e.g., "120mg/5ml" -> 120 and 5)
+          // Extract numbers from concentration string (e.g., "120mg/5ml" -> 120 and 5)
           final RegExp regExp = RegExp(r'(\d+)mg/(\d+)ml');
           final Match? match = regExp.firstMatch(concentration);
 
@@ -234,9 +296,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           }
           break;
 
-
-
-        //4-weight and age, it's related to both weight and age if the drug has min age contraindications
+        //4-weight and age
         case "weightAndAge":
           final params = selectedDrug!.parameters!;
         
@@ -287,30 +347,45 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     }
   }
 
-
-
-
-
+  String _formatDate(String dateStr) {
+    final date = DateTime.parse(dateStr);
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataProvider>(context);
-
-
-    if (userData.id.isEmpty) {
+    // Show loading indicator while loading data
+    if (_isLoading) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 20),
+              Text('Loading data...'),
+            ],
+          ),
+        ),
+      );
+    }
+    
+    // If no user is loaded, there's likely an authentication issue
+    if (_user == null) {
+      // Delay navigation to prevent build errors
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, '/login');
       });
-      return Container();
+      return Scaffold(body: Center(child: Text("Redirecting to login...")));
     }
 
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
         child: ListView(
-          padding: EdgeInsets.only(top: 30.0),
+          padding: EdgeInsets.only(top: 20.0),
           children: <Widget>[
-            Icon(Icons.account_circle, size: 80,),
+            Icon(Icons.account_circle, size: 60,),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Divider(
@@ -320,7 +395,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ListTile(
               leading: const Icon(Icons.verified_user_sharp),
               title: const Text('I D' ,style: TextStyle(fontWeight: FontWeight.bold),),
-              subtitle:  Text(UserData.email),
+              subtitle: Text(_user?.username ?? 'user', style: TextStyle( fontWeight: FontWeight.w600),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
               },
@@ -328,51 +403,101 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ListTile(
               leading: const Icon(Icons.lock),
               title: const Text('P A S S W O R D',style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle:  Text(UserData.password),
-
+              subtitle: Text(_user?.email ?? '', style: TextStyle( fontWeight: FontWeight.w600),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
               },
+            ),
+            ExpansionTile(
+              leading: const Icon(Icons.access_time),
+              title: const Text('Your account status', style: TextStyle(fontWeight: FontWeight.bold)),
+              initiallyExpanded: _isSubscriptionExpanded,
+              onExpansionChanged: (expanded) {
+                setState(() {
+                  _isSubscriptionExpanded = expanded;
+                });
+              },
+              children: [
+                _subscription != null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                        child: Card(
+                          //color: const Color.fromARGB(134, 186, 186, 186),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 4),
+                                Center(child: Text('$remainingDays days remaining out of $totalDays')),
+                                const SizedBox(height: 8),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: LinearProgressIndicator(
+                                    value: subscriptionPercentage,
+                                    backgroundColor: Colors.grey[300],
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      subscriptionPercentage > 0.2 
+                                          ? Colors.green 
+                                          : Colors.red
+                                    ),
+                                    minHeight: 10,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  '${(subscriptionPercentage * 100).toInt()}% remaining',
+                                  style: TextStyle(
+                                    color: subscriptionPercentage > 0.2 
+                                        ? Colors.green 
+                                        : Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Divider(
+                                    color: Color.fromARGB(167, 0, 0, 0),
+                                  ),
+                                ),                
+                                Center(child: Text('Plan: ${_subscription!.planType}', style: TextStyle(fontWeight: FontWeight.bold))),
+                                SizedBox(height: 8),
+                                Center(child: Text('Start Date: ${_formatDate(_subscription!.startDate)}')),
+                                SizedBox(height: 8),
+                                Center(child: Text('End Date: ${_formatDate(_subscription!.endDate)}')),
+                                SizedBox(height: 8),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Divider(
+                                    color: Color.fromARGB(167, 0, 0, 0),
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                    'Status: ${_subscription!.isActive ? 'Active' : 'Inactive'}',
+                                    style: TextStyle(
+                                      color: _subscription!.isActive ? Colors.green : Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text('No active subscription found.'),
+                          ),
+                        ),
+                      ),
+              ],
             ),
             ListTile(
-              leading: const Icon(Icons.access_time),
-              title: const Text('Your account status',style: TextStyle(fontWeight: FontWeight.bold),),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 4),
-                  Text('$remainingDays days remaining'),
-                  const SizedBox(height: 8),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: LinearProgressIndicator(
-                      value: subscriptionPercentage,
-                      backgroundColor: Colors.grey[300],
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        subscriptionPercentage > 0.3 
-                            ? Colors.green 
-                            : Colors.red
-                      ),
-                      minHeight: 10,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '${(subscriptionPercentage * 100).toInt()}% remaining',
-                    style: TextStyle(
-                      color: subscriptionPercentage > 0.3 
-                          ? Colors.green 
-                          : Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context); // Close the drawer
-              },
-            ),
-                        ListTile(
               leading: const Icon(Icons.question_answer),
               title: const Text('Any QUESTIONS?',style: TextStyle(fontWeight: FontWeight.bold)),
               onTap: () {
@@ -382,7 +507,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(left: 50.0, top: 70),
+              padding: const EdgeInsets.only(left: 50.0, top: 20),
               child: Row(
                 children: [
                   Text("Theme Mode", style: TextStyle(fontWeight: FontWeight.bold),),
@@ -390,23 +515,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     value: Provider.of<UserDataProvider>(context).isDarkMode, 
                     onChanged: (value){
                       Provider.of<UserDataProvider>(context, listen: false).isDarkMode = value;
+                      
                     },
                   ),
                 ],
               ),
             ),
 
-
-
-
-            //ListTile(
-              //leading: const Icon(Icons.settings),
-              //title: const Text('S E T T I N G S',style: TextStyle(fontWeight: FontWeight.bold)),
-              //onTap: () {
-                //Navigator.pop(context); // Close the drawer
-              //},
-            //),
-            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Divider(
@@ -417,15 +532,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('L O G O U T', style: TextStyle(fontWeight: FontWeight.bold)),
+              onLongPress: _logout,
               onTap: () {
-                // Clear user data
-                UserData.email = '';
-                UserData.password = '';
-                // Navigate to login screen
-                Navigator.pushReplacementNamed(context, '/login');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Long press to logout'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
               },
             ),
-
           ],
         ),
       ),
@@ -433,7 +549,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         textDirection: TextDirection.rtl,
         child: SafeArea(
           child: Padding(
-            //padding: const EdgeInsets.all(20.0),
             padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
             child: Column(
               children: [
@@ -508,7 +623,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                         blurRadius: 5,
                                         spreadRadius: 1,
                                       ),
-                                      // Inner shadow (bottom-right) - darker
                                       BoxShadow(
                                         color: Colors.white,
                                         offset: const Offset(-3, -3),
@@ -561,7 +675,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           color: Colors.white,
                           child: Container(
                             width: 230,
-                             // Set the width as needed
                             constraints: BoxConstraints(
                               maxHeight: 300,
                             ),
@@ -685,9 +798,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0, left: 70, right: 70),
-                  child: Divider(
-                    //color: Color.fromARGB(255, 49, 101, 129),
-                  ),
+                  child: Divider(),
                 ),
                 if (result != null)
                   Padding(
@@ -695,17 +806,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     child: Text(
                       result!,
                       style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
                 Padding(
-                  padding: const EdgeInsets.only( left: 70, right: 70),
-                  child: Divider(
-                    //color: Color.fromARGB(255, 49, 101, 129),
-                  ),
+                  padding: const EdgeInsets.only(left: 70, right: 70),
+                  child: Divider(),
                 ),
                 const Spacer(),
                 const Text(
@@ -723,7 +832,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:[
                     IconButton(
-                      icon:  Icon(Icons.telegram, size: 17),
+                      icon: Icon(Icons.telegram, size: 17),
                       onPressed: () => _launchURL('https://t.me/TA_pharmacy'),
                     ),
                     SizedBox(width: 5),
@@ -731,16 +840,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       icon: FaIcon(FontAwesomeIcons.twitter, size: 17),
                       onPressed: () => _launchURL("https://x.com/amrqhz"),
                     ),
-                    //SizedBox(width: 5),
-                    //IconButton(
-                      //icon: Icon(Icons.share, size: 17),
-                      //onPressed: (){
-                        //Share.share("check out this awesome app: https://yourlink.com");
-                      //},
-                    //),
                   ],
                 )
-
               ],
             ),
           ),

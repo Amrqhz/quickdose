@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/custom_text_field.dart';
+import '../services/api_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,16 +16,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   Uint8List? _idImage;
   final ImagePicker _picker = ImagePicker();
   bool _isLoading = false;
+
+  final ApiService _apiService = ApiService();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _idController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
@@ -38,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  void _register() async {
+  Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
@@ -50,10 +53,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         // await YourCustomBackend.registerUser(
         //   email: _emailController.text.trim(),
         //   password: _passwordController.text.trim(),
-        //   id: _idController.text.trim(),
+        //   id: _usernameController.text.trim(),
         //   idImage: _idImage,
         // );
-
+        await _apiService.registerUser(
+          _emailController.text,
+          _usernameController.text,
+          _passwordController.text,
+        );
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Registration successful! Please login.'),
+            backgroundColor: Colors.green,
+          ),
+        );
         // Navigate to the next screen upon successful registration
         Navigator.pushReplacementNamed(context, '/login');
       } finally {
@@ -129,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 CustomTextField(
                   label: 'ID:',
                   isPassword: false,
-                  controller: _idController,
+                  controller: _usernameController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your ID';
