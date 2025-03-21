@@ -51,7 +51,7 @@ Future<void> _login() async {
           _passwordController.text,
         );
         
-        ScaffoldMessenger.of(_).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Login successful!'),
             backgroundColor: Colors.green,
