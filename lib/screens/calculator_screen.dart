@@ -429,7 +429,7 @@ double get subscriptionPercentage {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(height: 4),
-                                Center(child: Text('$remainingDays days remaining out of $totalDays')),
+                                Center(child: Text('$remainingDays days remaining out of $totalDays', style: TextStyle(fontWeight: FontWeight.w700),)),
                                 const SizedBox(height: 8),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
