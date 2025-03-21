@@ -394,7 +394,7 @@ double get subscriptionPercentage {
             ),
             ListTile(
               leading: const Icon(Icons.verified_user_sharp),
-              title: const Text('I D' ,style: TextStyle(fontWeight: FontWeight.bold),),
+              title: const Text('I D',style: TextStyle(fontWeight: FontWeight.bold),),
               subtitle: Text(_user?.username ?? 'user', style: TextStyle( fontWeight: FontWeight.w600),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
