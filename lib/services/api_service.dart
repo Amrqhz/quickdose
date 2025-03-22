@@ -10,16 +10,23 @@ class ApiService {
   // If testing on a physical device, use your computer's IP address
   
   // Method to register a new user
-  Future<Map<String, dynamic>> registerUser(String email, String username, String password) async {
+  Future<Map<String, dynamic>> registerUser(
+    String email, 
+    String username, 
+    String password, 
+    String planType,
+    int durationMonths) async {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/register'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(<String, String>{
+      body: jsonEncode({
         'email': email,
         'username': username,
         'password': password,
+        "plan_type" : planType,
+        'duration_months': durationMonths,
       }),
     );
 
