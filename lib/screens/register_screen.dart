@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           actions: [
             TextButton(
-              child: const Text("Cancel"),
+              child: const Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold),),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -174,8 +174,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Text(
               duration,
               style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[700],
+                fontSize: 14,
+                color: Colors.grey[900],
+                fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,
             ),
@@ -302,9 +303,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          "Select your plan",
+                          "Pick your plan",
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),

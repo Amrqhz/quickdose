@@ -37,7 +37,7 @@ class _ShopingScreenState extends State<ShopingScreen> {
               const SizedBox(height: 24),
               const Text(
                 "Pick your Plan",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
@@ -161,7 +161,7 @@ class _ShopingScreenState extends State<ShopingScreen> {
     }
 
     return Container(
-      width: double.infinity,
+      width: 400,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
