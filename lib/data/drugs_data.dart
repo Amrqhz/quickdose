@@ -27,7 +27,9 @@ final List<Drug> drugs = [
       "maxDose": 4000.0,
       "frequency":8,
     },
+    
   ),
+
 
 
   Drug(
