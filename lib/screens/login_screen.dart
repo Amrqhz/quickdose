@@ -11,8 +11,6 @@ import '../services/api_service.dart';
 //}
 
 
-
-
 class LoginScreen extends StatefulWidget {
 
   LoginScreen({Key? key}):super(key: key);
@@ -50,6 +48,16 @@ Future<void> _login() async {
           _emailController.text,
           _passwordController.text,
         );
+
+               // Then check the active subscription
+        final subscription = await _apiService.getActiveSubscription();
+        
+        // Check if subscription is expired
+        if (_isSubscriptionExpired(subscription)) {
+          // Show subscription expired dialog
+          await _showSubscriptionExpiredDialog();
+          return;
+        }
         
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -75,6 +83,76 @@ Future<void> _login() async {
         });
       }
     }
+  }
+  // Helper method to check if subscription is expired
+  bool _isSubscriptionExpired(Map<String, dynamic> subscription) {
+    // Parse the subscription end date
+    final endDate = DateTime.parse(subscription['end_date']);
+    
+    // Check if the end date is before the current date
+    return endDate.isBefore(DateTime.now());
+  }
+
+  // Method to show subscription expired dialog
+  Future<void> _showSubscriptionExpiredDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // User must tap button to dismiss
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Subscription Expired',
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Your subscription has expired.',
+                  style: GoogleFonts.roboto(),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Please renew your subscription to continue using the app.',
+                  style: GoogleFonts.roboto(),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Renew Subscription',
+                style: GoogleFonts.roboto(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                // Navigate to subscription renewal page
+                Navigator.of(context).pushNamed('/subscription');
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Logout',
+                style: GoogleFonts.roboto(
+                  color: Colors.red,
+                ),
+              ),
+              onPressed: () {
+                // Logout the user
+                _apiService.logout();
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

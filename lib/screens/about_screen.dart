@@ -28,7 +28,8 @@ Widget build(BuildContext context){
                 child: Builder(
                   builder: (BuildContext context) => TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, "/login");
+                      Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                     child: Text("Back", style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),

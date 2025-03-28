@@ -22,9 +22,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final List<String> planTypes = ["free", "pro", "enterprise"];
   final List<String> planNames = ["Free Plan", "Pro Plan", "Enterprise"];
   final List<String> planDescriptions = [
-    "Basic features for personal use",
-    "Advanced features with priority support",
-    "Custom solutions for businesses"
+    "• Basic Calculation \n• Limited Drugs \n• 20 minutes per each referal code",
+    "• More than 50 drugs \n• Pediatrics and Adults \n• Any types of dosageform \n• Based on IRC-FDA drug list \n• Advanced features with priority support",
+    "• More than 50 drugs \n• Pediatrics and Adults \n• Any types of dosageform \n• Based on IRC-FDA drug list \n• Advanced features with priority support"
   ];
 
 
@@ -236,11 +236,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  
-                  const Icon(
-                    Icons.app_registration,
-                    size: 48,
-                  ),
+                  Image.asset("./assets/register2.png"),
+                  // const Icon(
+                  //   Icons.app_registration,
+                  //   size: 48,
+                  // ),
                   const SizedBox(height: 10),
                   Text(
                     'Register',
@@ -352,7 +352,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     planNames[selectedPlanIndex],
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 16,
+                                      fontSize: 20,
                                       color: Colors.black
                                     ),
                                   ),
@@ -362,8 +362,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Text(
                                 planDescriptions[selectedPlanIndex],
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[700],
+                                  fontSize: 15,
+                                  color: Colors.grey[900],
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               const SizedBox(height: 30),

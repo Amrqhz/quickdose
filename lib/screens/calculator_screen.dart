@@ -402,7 +402,7 @@ double get subscriptionPercentage {
             ),
             ListTile(
               leading: const Icon(Icons.lock),
-              title: const Text('P A S S W O R D',style: TextStyle(fontWeight: FontWeight.bold)),
+              title: const Text('E M A I L',style: TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(_user?.email ?? '', style: TextStyle( fontWeight: FontWeight.w600),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
