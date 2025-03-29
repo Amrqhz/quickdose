@@ -29,7 +29,6 @@ Widget build(BuildContext context){
                   builder: (BuildContext context) => TextButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      Navigator.pop(context);
                     },
                     child: Text("Back", style: TextStyle(fontSize: 16, color: Colors.black)),
                   ),
@@ -78,7 +77,7 @@ Widget build(BuildContext context){
                           IconButton(
                             icon: Icon(Icons.share, size: 20),
                             onPressed: (){
-                              Share.share("check out this awesome app: https://yourlink.com");
+                              Share.share("QuickDose \n\n\nYour Precision Pharmacy Companion \n\nAccurate Calculations at Your Fingertips \n\nQuickDose is more than just a handy calculator—it's your trusted partner for precise drug dosing in the fast-paced world of pharmacy. \nWith its user-friendly interface and powerful features, QuickDose empowers healthcare professionals to make confident, accurate decisions.\n\n\n\n\ncheck out this awesome app: https://github.com/amrqhz/quickdose");
                             },
                           ),
                         ],

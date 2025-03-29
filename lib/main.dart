@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       themeMode: Provider.of<UserDataProvider>(context).isDarkMode
           ? ThemeMode.dark
           : ThemeMode.light,
-      home:  SplashScreen(),
+      home:  CalculatorScreen(),
       routes: {
         '/login': (context) =>  LoginScreen(),
         '/register': (context) => RegisterScreen(),
