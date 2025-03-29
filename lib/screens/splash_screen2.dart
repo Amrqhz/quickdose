@@ -12,7 +12,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacementNamed('/login');
     });
   }
@@ -69,16 +69,16 @@ class _SplashScreen2State extends State<SplashScreen2> {
                           shape: BoxShape.circle,
                         ),
                       ),
-                      const SizedBox(width: 5),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: const BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
+                    //   const SizedBox(width: 5),
+                    //   Container(
+                    //     width: 10,
+                    //     height: 10,
+                    //     decoration: const BoxDecoration(
+                    //       color: Colors.black,
+                    //       shape: BoxShape.circle,
+                    //     ),
+                    //   ),
+                     ],
                   ),
                   const SizedBox(height: 20),
                   TextButton(

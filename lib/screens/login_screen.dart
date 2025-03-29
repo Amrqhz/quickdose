@@ -175,17 +175,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Builder(
-                        builder: (BuildContext context) => TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Back", style: TextStyle(fontSize: 16, color: Colors.black)),
-                        ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.topRight,
+                    //   child: Builder(
+                    //     builder: (BuildContext context) => TextButton(
+                    //       onPressed: () {
+                    //         Navigator.of(context).pop();
+                    //       },
+                    //       child: Text("Back", style: TextStyle(fontSize: 16, color: Colors.black)),
+                    //     ),
+                    //   ),
+                    // ),
                 
                     const SizedBox(height: 30),
                     const Icon(

@@ -47,10 +47,7 @@ flutter_native_splash:
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
   image: assets/app icon.png
-  android_gravity: center
   android_12:
-    color: "#ffffff"
-    image: assets/app icon.png
 
 
 
