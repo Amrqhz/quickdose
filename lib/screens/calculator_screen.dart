@@ -555,12 +555,13 @@ double get subscriptionPercentage {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.shopping_cart),
-                      onPressed: (){
-                        Navigator.pushNamed(context, "/shoping");
-                      },
-                    ),
+                    //IconButton(
+                      Icon(Icons.shopping_cart),
+                      // onPressed: (){
+                      //   Navigator.pushNamed(context, "/shoping");
+                      // },
+                      
+                    //),
                     
                     IconButton(
                       icon: const Icon(Icons.person_outline),
