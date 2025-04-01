@@ -669,15 +669,15 @@ double get subscriptionPercentage {
                         AutocompleteOnSelected<Drug> onSelected,
                         Iterable<Drug> options) {
                       return Align(
-                        alignment: Alignment.topCenter,
+                        alignment: Alignment.topRight,
                         child: Material(
                           elevation: 4.0,
                           borderRadius: BorderRadius.circular(12),
                           color: Colors.white,
                           child: Container(
-                            width: 230,
+                            width: 300,
                             constraints: BoxConstraints(
-                              maxHeight: 300,
+                              maxHeight: 350,
                             ),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -693,38 +693,44 @@ double get subscriptionPercentage {
                                   onTap: () {
                                     onSelected(option);
                                   },
-                                  child: ListTile( 
-                                    dense: true,
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                    title: Text(option.name,
+                                  child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: ListTile( 
+                                      dense: true,
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                      title: Text(
+                                        option.name,
                                         style: const TextStyle(
-                                            color: Colors.black, fontSize: 16)),
-                                    subtitle: Padding(
-                                      padding: const EdgeInsets.only(top: 4.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                              option.concentration,
-                                              style:
-                                                  const TextStyle(color: Colors.black, fontWeight: FontWeight.w600)
-                                          ),
-                                          SizedBox(width: 20,),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              color: getDosageFormColor(option.dosageform),
-                                              borderRadius: BorderRadius.circular(12),
+                                          color: Colors.black, 
+                                          fontSize: 16)                                         
+                                      ),
+                                      subtitle: Padding(
+                                        padding: const EdgeInsets.only(top: 4.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                                option.concentration,
+                                                style:
+                                                    const TextStyle(color: Colors.black, fontWeight: FontWeight.w600)
                                             ),
-                                            child: Text(
-                                              option.dosageform,
-                                              style: const TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
+                                            SizedBox(width: 20,),
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                              decoration: BoxDecoration(
+                                                color: getDosageFormColor(option.dosageform),
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              child: Text(
+                                                option.dosageform,
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -795,7 +801,10 @@ double get subscriptionPercentage {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0, left: 70, right: 70),
-                  child: Divider(),
+                  child: Divider(
+                    color: const Color.fromARGB(255, 159, 191, 207),
+                  ),
+                  
                 ),
                 if (result != null)
                   Padding(
@@ -811,7 +820,9 @@ double get subscriptionPercentage {
                   ),
                 Padding(
                   padding: const EdgeInsets.only(left: 70, right: 70),
-                  child: Divider(),
+                  child: Divider(
+                    color: const Color.fromARGB(255, 159, 191, 207),
+                  ),
                 ),
                 const Spacer(),
                 const Text(

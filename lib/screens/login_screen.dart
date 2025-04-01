@@ -207,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 60),
                     CustomTextField(
                       label: 'Email:',
                       isPassword: false,

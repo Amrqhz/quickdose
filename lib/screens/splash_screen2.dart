@@ -27,7 +27,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("./assets/env.png"),
+                  Image.asset("./assets/g48.png",width: 80,height: 80,),
                   SizedBox(height: 80),
                   Text(
                     "Introduce us to your friends.",
