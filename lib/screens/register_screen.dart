@@ -246,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     'Register',
                     style: GoogleFonts.roboto(
                       fontSize: 36,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 40),

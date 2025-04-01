@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'HELLO AGAIN',
                       style: GoogleFonts.roboto(
                         fontSize: 36,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(

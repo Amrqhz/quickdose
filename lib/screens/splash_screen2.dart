@@ -31,7 +31,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                   SizedBox(height: 80),
                   Text(
                     "Introduce us to your friends.",
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 80,),
                   Text(
