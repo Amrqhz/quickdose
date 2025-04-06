@@ -34,14 +34,14 @@ class MyApp extends StatelessWidget {
       title: 'Drug Dose Calculator',
       theme: ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: const Color.fromARGB(189, 171, 195, 207),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 171, 195, 207),
         textTheme: GoogleFonts.anticDidoneTextTheme(
           const TextTheme(bodyLarge: TextStyle(fontWeight: FontWeight.bold, color: Colors.black) )
         ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color.fromARGB(210, 101, 120, 129),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 101, 120, 129),
         textTheme: GoogleFonts.anticDidoneTextTheme(
           const TextTheme(bodyLarge: TextStyle(fontWeight: FontWeight.bold, color: Colors.black))
 

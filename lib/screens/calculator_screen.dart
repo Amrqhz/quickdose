@@ -462,9 +462,9 @@ double get subscriptionPercentage {
                                 ),                
                                 Center(child: Text('Plan: ${_subscription!.planType}', style: TextStyle(fontWeight: FontWeight.bold))),
                                 SizedBox(height: 8),
-                                Center(child: Text('Start Date: ${_formatDate(_subscription!.startDate)}')),
+                                Center(child: Text('Start Date: ${_formatDate(_subscription!.startDate)}', style: TextStyle(fontWeight: FontWeight.w700),)),
                                 SizedBox(height: 8),
-                                Center(child: Text('End Date: ${_formatDate(_subscription!.endDate)}')),
+                                Center(child: Text('End Date: ${_formatDate(_subscription!.endDate)}', style: TextStyle(fontWeight: FontWeight.w700))),
                                 SizedBox(height: 8),
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
@@ -619,15 +619,15 @@ double get subscriptionPercentage {
                                     borderRadius: BorderRadius.circular(15),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.shade400,
-                                        offset: const Offset(3, 3),
-                                        blurRadius: 5,
+                                        color: const Color.fromARGB(44, 212, 212, 212),
+                                        offset: const Offset(-2, 2),
+                                        blurRadius: 2,
                                         spreadRadius: 1,
                                       ),
                                       BoxShadow(
                                         color: Colors.white,
-                                        offset: const Offset(-3, -3),
-                                        blurRadius: 5,
+                                        offset: const Offset(2, -2),
+                                        blurRadius: 2,
                                         spreadRadius: 1,
                                       ),
                                     ],

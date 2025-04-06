@@ -27,6 +27,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   http:
   flutter_native_splash: ^2.4.5
+  pinput: ^5.0.1
 
 flutter_native_splash:
 

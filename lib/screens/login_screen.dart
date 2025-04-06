@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinput/pinput.dart';
 import '../widgets/custom_text_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/api_service.dart';
+
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}):super(key: key);
@@ -16,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _codeController = TextEditingController();
   final ApiService _apiService = ApiService();
   
   bool _isLoading = false;
@@ -24,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _codeController.dispose();
     super.dispose();
   }
 
@@ -230,6 +234,37 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
+                    const SizedBox(height: 40),
+                    SizedBox(
+                      height: 30,
+                      child: Text('"Please insert the code"', style: TextStyle(fontWeight:FontWeight.w700),)),
+                    SizedBox(
+                      //height: 50,
+                      child: Pinput(
+                        controller: _codeController,
+                        defaultPinTheme: PinTheme(
+                          width: 56,
+                          height: 56,
+                          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                          decoration: BoxDecoration(
+                            //border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
+                            borderRadius: BorderRadius.circular(20),
+                            color: Color(0xFFD8E2DC),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color.fromRGBO(146, 146, 146, 0.685),
+                                offset: Offset(-2, 2),
+                                blurRadius: 2,
+                              ),
+                            ],
+                          )
+                        ) ,
+                        length: 4,
+                        showCursor: true,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                         
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -237,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Flexible(
                           child: TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/register');
+                              //Navigator.pushNamed(context, '/register');
                             },
                             child: const Text("Forgot password?", 
                               style: TextStyle(
@@ -250,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Flexible(
                           child: TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/register');
+                              //Navigator.pushNamed(context, '/register');
                             },
                             child: const Text('Register here!', 
                               style: TextStyle(
