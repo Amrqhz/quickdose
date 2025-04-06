@@ -243,8 +243,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Pinput(
                         controller: _codeController,
                         defaultPinTheme: PinTheme(
-                          width: 56,
-                          height: 56,
+                          width: 50,
+                          height: 50,
                           textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                           decoration: BoxDecoration(
                             //border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
@@ -272,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Flexible(
                           child: TextButton(
                             onPressed: () {
-                              //Navigator.pushNamed(context, '/register');
+                              Navigator.pushNamed(context, '/register');
                             },
                             child: const Text("Forgot password?", 
                               style: TextStyle(
@@ -285,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Flexible(
                           child: TextButton(
                             onPressed: () {
-                              //Navigator.pushNamed(context, '/register');
+                              Navigator.pushNamed(context, '/register');
                             },
                             child: const Text('Register here!', 
                               style: TextStyle(
