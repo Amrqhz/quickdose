@@ -53,14 +53,43 @@ Widget build(BuildContext context){
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 20,),
-                      Text("Welcome to the Dose Calculator App, your essential tool for precision in OTC therapy. Our innovative application empowers pharmacists to calculate accurate drug doses tailored to each patient's unique profile. Simply input the patient's age and weight, and let our app do the rest. We've designed this tool to streamline your decision-making process, whether you're consulting in a pharmacy or working in other healthcare settings. By providing quick, reliable dosage calculations, we aim to enhance your efficiency and confidence in recommending OTC medications. The Dose Calculator App is more than just a tool – it's your partner in delivering personalized, safe, and effective patient care. \nJoin us in revolutionizing OTC therapy management and experience the future of pharmaceutical practice at your fingertips.",
+                      Text("• Welcome to the Dose Calculator App, your essential tool for precision in OTC therapy. Our innovative application empowers pharmacists to calculate accurate drug doses tailored to each patient's unique profile. Simply input the patient's age and weight, and let our app do the rest. We've designed this tool to streamline your decision-making process, whether you're consulting in a pharmacy or working in other healthcare settings. By providing quick, reliable dosage calculations, we aim to enhance your efficiency and confidence in recommending OTC medications. The Dose Calculator App is more than just a tool – it's your partner in delivering personalized, safe, and effective patient care. \nJoin us in revolutionizing OTC therapy management and experience the future of pharmaceutical practice at your fingertips.",
                         style: TextStyle(
                           fontSize: 16.5,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30.0, right: 30, bottom: 40),
+                        child: Divider(
+                          color: Color(0xFF90A4AE),
+                        ),
+                      ),
+                      Text("• Special Thanks too ,Mina",
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30,),
+                      Text("• OUR TEAM 🫧",
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text('"Amirrossein | Sadegh"',
+                        style: TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children:[
