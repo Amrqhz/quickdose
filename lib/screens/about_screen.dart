@@ -67,7 +67,7 @@ Widget build(BuildContext context){
                           color: Color(0xFF90A4AE),
                         ),
                       ),
-                      Text("• Special Thanks too ,Mina",
+                      Text("• Special Thanks too, Mina",
                         style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.bold,
