@@ -15,7 +15,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _codeController = TextEditingController();
   bool _isLoading = false;
+
 
   // Plan selection
   int selectedPlanIndex = 0; // Default to free Plan
@@ -39,6 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
+    _codeController.dispose();
     super.dispose();
   }
 
@@ -53,6 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           _emailController.text,
           _usernameController.text,
           _passwordController.text,
+          _codeController.text,
           planTypes[selectedPlanIndex],
           selectedDuration,
         );

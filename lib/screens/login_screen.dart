@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await _apiService.login(
           _emailController.text,
           _passwordController.text,
+          _codeController.text,
         );
         
         // Then check the active subscription
@@ -243,8 +244,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Pinput(
                         controller: _codeController,
                         defaultPinTheme: PinTheme(
-                          width: 50,
-                          height: 50,
+                          width: 48,
+                          height: 48,
                           textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                           decoration: BoxDecoration(
                             //border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),

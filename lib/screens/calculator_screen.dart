@@ -514,8 +514,7 @@ double get subscriptionPercentage {
                   CupertinoSwitch(
                     value: Provider.of<UserDataProvider>(context).isDarkMode, 
                     onChanged: (value){
-                      Provider.of<UserDataProvider>(context, listen: false).isDarkMode = value;
-                      
+                      Provider.of<UserDataProvider>(context, listen: false).isDarkMode = value; 
                     },
                   ),
                 ],
@@ -621,13 +620,13 @@ double get subscriptionPercentage {
                                       BoxShadow(
                                         color: const Color.fromARGB(44, 212, 212, 212),
                                         offset: const Offset(-2, 2),
-                                        blurRadius: 2,
+                                        blurRadius: 3,
                                         spreadRadius: 1,
                                       ),
                                       BoxShadow(
                                         color: Colors.white,
                                         offset: const Offset(2, -2),
-                                        blurRadius: 2,
+                                        blurRadius: 3,
                                         spreadRadius: 1,
                                       ),
                                     ],
@@ -802,7 +801,7 @@ double get subscriptionPercentage {
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0, left: 70, right: 70),
                   child: Divider(
-                    color: const Color.fromARGB(255, 159, 191, 207),
+                    color: const Color.fromARGB(255, 123, 146, 158),
                   ),
                   
                 ),
@@ -821,7 +820,7 @@ double get subscriptionPercentage {
                 Padding(
                   padding: const EdgeInsets.only(left: 70, right: 70),
                   child: Divider(
-                    color: const Color.fromARGB(255, 159, 191, 207),
+                    color: const Color.fromARGB(255, 123, 146, 158),
                   ),
                 ),
                 const Spacer(),

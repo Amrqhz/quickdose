@@ -14,6 +14,7 @@ class ApiService {
     String email, 
     String username, 
     String password, 
+    String oneTimeCode,
     String planType,
     int durationMonths) async {
     final response = await http.post(
@@ -25,6 +26,7 @@ class ApiService {
         'email': email,
         'username': username,
         'password': password,
+        'one_time_code': oneTimeCode,
         "plan_type" : planType,
         'duration_months': durationMonths,
       }),
@@ -38,7 +40,7 @@ class ApiService {
   }
 
   // Method to login
-  Future<String> login(String email, String password) async {
+  Future<String> login(String email, String password, String oneTimeCode) async {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/token'),
       headers: <String, String>{
@@ -47,6 +49,7 @@ class ApiService {
       body: {
         'username': email,
         'password': password,
+        'onetimecode': oneTimeCode,
       },
     );
 
