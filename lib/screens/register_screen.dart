@@ -17,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
   bool _isLoading = false;
+  bool _isPlanExpanded = false; // Track expansion state
 
 
   // Plan selection
@@ -148,10 +149,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: BoxDecoration(
           color: isSelected ? const Color.fromARGB(255, 255, 255, 255) : Colors.grey[200],
           borderRadius: BorderRadius.circular(12),
-          // border: Border.all(
-          //   color: isSelected ? const Color(0xFF67B639) : Colors.grey[300]!,
-          //   width: 2,
-          // ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
@@ -197,24 +194,117 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildDurationButton() {
-    return Center(
-      child: ElevatedButton.icon(
-        onPressed: _showDurationDialog,
-        icon: const Icon(Icons.schedule, size: 18),
-        label: Text(
-          "Duration: $selectedDuration ${selectedDuration == 1 ? 'Month' : 'Months'}",
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF67B639),
-          foregroundColor: Colors.black87,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+  Widget _buildPlanSelection() {
+    return ExpansionTile(
+      title: Center(
+        child: const Text(
+          "Pick your plan",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            //color: Colors.black,
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         ),
       ),
+      subtitle: Center(
+        child: Text(
+          " ${planNames[selectedPlanIndex]}, ${selectedDuration} ${selectedDuration == 1 ? 'Month' : 'Months'}",
+          style: TextStyle(
+            fontSize: 14,
+            //color: Colors.black,
+          ),
+        ),
+      ),
+      leading: const Icon(Icons.dashboard_customize_outlined), 
+      initiallyExpanded: _isPlanExpanded,
+      onExpansionChanged: (isExpanded) {
+        setState(() {
+          _isPlanExpanded = isExpanded;
+        });
+      },
+      trailing: Icon(
+        _isPlanExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+      ),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      expandedCrossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(height: 10),
+        Text(
+          "Choose the plan that works best for you",
+          style: TextStyle(
+            fontSize: 14,
+            //color: Colors.grey[800],
+          ),
+        ),
+        const SizedBox(height: 25),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildPlanCard(0),
+            _buildPlanCard(1),
+            _buildPlanCard(2),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Divider(
+            color: Color(0xFF90A4AE),
+          ),
+        ),
+        Container(
+          width: 300,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    planNames[selectedPlanIndex],
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      //color: Colors.black
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                planDescriptions[selectedPlanIndex],
+                style: TextStyle(
+                  fontSize: 15,
+                  //color: Colors.grey[900],
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: _showDurationDialog,
+                  icon: const Icon(Icons.schedule, size: 18),
+                  label: Text(
+                    "Duration: $selectedDuration ${selectedDuration == 1 ? 'Month' : 'Months'}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF67B639),
+                    foregroundColor: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -240,7 +330,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  // Image.asset("./assets/register2.png"),
                   const Icon(
                     Icons.lock_person_outlined,
                     size: 48,
@@ -253,7 +342,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Text("Hope you enjoy!",
+                  Text("Start today, be valubale to society!",
                     style: GoogleFonts.roboto(
                       fontSize: 12,
                       fontWeight: FontWeight.w900,
@@ -297,95 +386,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 30),
-                  
-                  // New plan selection section
-                  Container(
-                    width: 400, //double.infinity,
-                    padding: const EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey[300]!),
+                  const SizedBox(height: 30), 
+                  // New ExpansionTile for plan selection
+                  Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Pick your plan",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Choose the plan that works best for you",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            _buildPlanCard(0),
-                            _buildPlanCard(1),
-                            _buildPlanCard(2),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Divider(
-                            color: Color(0xFF90A4AE),
-                          ),
-                        ),
-                        // Plan description
-                        Container(
-                          width: 300,
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            //color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            //border: Border.all(color: const Color(0xFF67B639)),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    planNames[selectedPlanIndex],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color: Colors.black
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                planDescriptions[selectedPlanIndex],
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.grey[900],
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 30),
-                              _buildDurationButton(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: _buildPlanSelection(),
                   ),
                   
-                  const SizedBox(height: 20),                
+                  const SizedBox(height: 40),                
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -401,19 +412,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                   ),
                   const SizedBox(height: 20),                
-                  ElevatedButton(
+                  TextButton(
                     onPressed: _isLoading ? null : _register,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF67B639),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    ),
+                    // style: ElevatedButton.styleFrom(
+                    //   backgroundColor: const Color(0xFF67B639),
+                    //   shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(30),
+                    //   ),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                    // ),
                     child: _isLoading 
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
-                          'Confirm',
+                          'Confirm 🫧',
                           style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.bold,

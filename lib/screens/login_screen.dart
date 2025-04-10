@@ -244,12 +244,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Pinput(
                         controller: _codeController,
                         defaultPinTheme: PinTheme(
-                          width: 48,
-                          height: 48,
+                          width: 42,
+                          height: 42,
                           textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                           decoration: BoxDecoration(
                             //border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(15),
                             color: Color(0xFFD8E2DC),
                             boxShadow: const [
                               BoxShadow(
