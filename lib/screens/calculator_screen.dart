@@ -182,7 +182,7 @@ double get subscriptionPercentage {
 
   // drug dose calculation
   void calculateDose() {
-    if (selectedDrug == null || weightController.text.isEmpty || ageController.text.isEmpty) {
+    if (selectedDrug == null) {
       setState(() {
         result = "لطفا یک دارو را انتخاب کرده و یک مقدار درستی از دوز و وزن را وارد کنید";
       });
@@ -194,7 +194,7 @@ double get subscriptionPercentage {
 
     if (weight == null || age == null) {
       setState(() {
-        result = "لطفا یک دارو را انتخاب کرده و یک مقدار درستی از دوز و وزن را وارد کنید";
+        result = "لطفا یک مقدار درستی از دوز و وزن را وارد کنید";
       });
       return;
     }
@@ -203,6 +203,9 @@ double get subscriptionPercentage {
       String doseResult = "";
       // Dose Calculation Logic
       switch (selectedDrug!.calculationType) {
+
+
+  //===========================================================
         //1-standard        
         case "standard":
           switch (selectedDrug!.name){
@@ -244,6 +247,8 @@ double get subscriptionPercentage {
           }
           break;
 
+
+  //===========================================================
         //2-volumebased
         case "volumebased":
           final params = selectedDrug!.parameters!;
@@ -251,10 +256,11 @@ double get subscriptionPercentage {
           double ds = params ["ds"];          
           int frequency = params ["frequency"];
 
-          double dose = weight * volume / ds;
-          doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
+          double calculatedDose = weight * volume / ds;
+          doseResult = "هر $frequency ساعت ${calculatedDose.toStringAsFixed(1)} سی سی مصرف شود ";
           break;
-        
+          
+  //===========================================================      
         //2.1-weightDivision
         case "weightDivision":
           final params = selectedDrug!.parameters!;
@@ -262,13 +268,15 @@ double get subscriptionPercentage {
           double maxDose = params ["maxDose"];   
           int frequency = params ["frequency"];
          
-          double dose = weight / divisor;
-          if (dose > maxDose){
-            dose = maxDose;
+          double calculatedDose = weight / divisor;
+          if (calculatedDose > maxDose){
+            calculatedDose = maxDose;
           }
-          doseResult = "هر $frequency ساعت ${dose.toStringAsFixed(1)} سی سی مصرف شود ";
+          doseResult = "هر $frequency ساعت ${calculatedDose.toStringAsFixed(1)} سی سی مصرف شود ";
           break;
 
+
+  //===========================================================
         //3-weightBased
         case "weightBased":
           final params = selectedDrug!.parameters!;
@@ -296,6 +304,9 @@ double get subscriptionPercentage {
           }
           break;
 
+
+
+  //===========================================================
         //4-weight and age
         case "weightAndAge":
           final params = selectedDrug!.parameters!;
@@ -304,14 +315,14 @@ double get subscriptionPercentage {
             throw "بیمار دارای حداقل سن لازم برای مصرف داروی انتخاب شده نمیباشد.";
           }
         
-          double dose;
+          double calculatedDose;
           if (age < 12) {
             // Child dosing
             double dosePerKg = params['childDosePerKg'];
-            dose = weight * dosePerKg;
+            calculatedDose = weight * dosePerKg;
           } else {
             // Adult dosing
-            dose = params['adultDose'].toDouble();
+            calculatedDose = params['adultDose'].toDouble();
           } 
           int frequency = params['frequency'];
         
@@ -322,10 +333,10 @@ double get subscriptionPercentage {
         
           if (match != null) {
             double mgPerMl = double.parse(match.group(1)!) / double.parse(match.group(2)!);
-            double mlDose = dose / mgPerMl;
+            double mlDose = calculatedDose / mgPerMl;
           
             doseResult = "${mlDose.toStringAsFixed(1)}ml every $frequency hours\n"
-                        "Total dose: ${dose.toStringAsFixed(1)}mg";
+                        "Total dose: ${calculatedDose.toStringAsFixed(1)}mg";
           }
           break;
 

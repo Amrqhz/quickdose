@@ -240,19 +240,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  Image.asset("./assets/register2.png"),
-                  // const Icon(
-                  //   Icons.app_registration,
-                  //   size: 48,
-                  // ),
-                  const SizedBox(height: 10),
+                  // Image.asset("./assets/register2.png"),
+                  const Icon(
+                    Icons.lock_person_outlined,
+                    size: 48,
+                  ),
+                  const SizedBox(height: 20),
                   Text(
-                    'Register',
+                    'NICE TO MEET YOU',
                     style: GoogleFonts.roboto(
                       fontSize: 36,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
+                  Text("Hope you enjoy!",
+                    style: GoogleFonts.roboto(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                  ),),
                   const SizedBox(height: 40),
                   CustomTextField(
                     label: 'Email:',
